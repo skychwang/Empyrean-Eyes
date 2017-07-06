@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94104D3F1F0E29DE00C44E81 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */; };
 		94703F401F0E20F600D875E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94703F3F1F0E20F600D875E8 /* AppDelegate.swift */; };
 		94703F421F0E20F600D875E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94703F411F0E20F600D875E8 /* Assets.xcassets */; };
 		94703F451F0E20F600D875E8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94703F431F0E20F600D875E8 /* MainMenu.xib */; };
@@ -24,6 +25,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
 		94703F3C1F0E20F600D875E8 /* EmpyreanEyes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmpyreanEyes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94703F3F1F0E20F600D875E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94703F411F0E20F600D875E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 		94703F3E1F0E20F600D875E8 /* EmpyreanEyes */ = {
 			isa = PBXGroup;
 			children = (
+				94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */,
 				94703F3F1F0E20F600D875E8 /* AppDelegate.swift */,
 				94703F411F0E20F600D875E8 /* Assets.xcassets */,
 				94703F431F0E20F600D875E8 /* MainMenu.xib */,
@@ -194,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94104D3F1F0E29DE00C44E81 /* StatusMenuController.swift in Sources */,
 				94703F401F0E20F600D875E8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
