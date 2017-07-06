@@ -397,6 +397,7 @@
 				94703F561F0E20F600D875E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94703F571F0E20F600D875E8 /* Build configuration list for PBXNativeTarget "EmpyreanEyesTests" */ = {
 			isa = XCConfigurationList;
@@ -405,6 +406,7 @@
 				94703F591F0E20F600D875E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
