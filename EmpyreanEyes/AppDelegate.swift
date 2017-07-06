@@ -19,7 +19,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusItem.title = "EmpyreanEyes"
+        //statusItem.title = "EmpyreanEyes"
+        statusItem.menu = statusMenu
+        let icon = NSImage(named: "statusIcon")
+        icon?.isTemplate = true // best for dark mode
+        statusItem.image = icon
         statusItem.menu = statusMenu
     }
 

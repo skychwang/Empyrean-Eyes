@@ -4,3 +4,6 @@ Empyrean Eyes is a small OS X application that automatically updates your deskto
 
 Inspired by [Satellite Eyes](https://github.com/tomtaylor/satellite-eyes).
 
+## Acknowledgements
+
+Icon made by [Freepik](http://www.flaticon.com/authors/freepik).
