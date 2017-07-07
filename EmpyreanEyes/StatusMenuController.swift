@@ -46,6 +46,22 @@ extension CLLocationCoordinate2D {
     }
 }
 
+extension NSImage {
+    var pngData: Data? {
+        guard let tiffRepresentation = tiffRepresentation, let bitmapImage = NSBitmapImageRep(data: tiffRepresentation) else { return nil }
+        return bitmapImage.representation(using: .PNG, properties: [:])
+    }
+    func pngWrite(to url: URL, options: Data.WritingOptions = .atomic) -> Bool {
+        do {
+            try pngData?.write(to: url, options: options)
+            return true
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
+    }
+}
+
 class StatusMenuController: NSObject, CLLocationManagerDelegate {
     
     @IBOutlet weak var statusMenu: NSMenu!
@@ -61,6 +77,10 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate {
     var rect:NSRect!
     var screenHeight:String = ""
     var screenWidth:String = ""
+    //
+    var image:NSImage!
+    var data:Data!
+    var workspace = NSWorkspace.shared()
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {
         NSApplication.shared().terminate(self)
@@ -117,9 +137,37 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate {
         ra = String(locationValue.longitude) //CHANGE THIS WHEN GET RA DEC
         dec = String(locationValue.latitude) //CHANGE THIS WHEN GET RA DEC
         
-        astroPicURL = URL(string: "http://skyserver.sdss.org/dr13/SkyServerWS/ImgCutout/getjpeg?ra=" + ra + "&dec=" + dec + "&scale=0.79224&width=" + screenWidth + "&height=" + screenHeight)
+        astroPicURL = URL(string: "https://skyserver.sdss.org/dr13/SkyServerWS/ImgCutout/getjpeg?ra=" + ra + "&dec=" + dec + "&scale=0.79224&width=" + screenWidth + "&height=" + screenHeight)
         
         print(astroPicURL)
+        
+        //image = NSImage(byReferencing: astroPicURL)
+        //print(image)
+        
+        do {
+            data = try Data(contentsOf: astroPicURL)
+        } catch {
+            print(error)
+        }
+        
+        //print(data)
+        
+        image = NSImage(data: data)
+        //print(image)
+        
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let destinationURL = documentsURL.appendingPathComponent("EmpyreanEyesImage.png")
+        if image.pngWrite(to: destinationURL) {
+            print("File saved")
+        }
+        
+        do {
+            try workspace.setDesktopImageURL(destinationURL, for: screen, options: [:])
+            print("Desktop Changed")
+        } catch {
+            print(error)
+        }
         
         locationManager?.stopUpdatingLocation()
         manager.delegate = nil
