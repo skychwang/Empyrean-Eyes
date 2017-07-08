@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		94104D3F1F0E29DE00C44E81 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */; };
+		944EFC8E1F11225600B84E4B /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EFC8C1F11225600B84E4B /* PreferencesWindow.swift */; };
+		944EFC8F1F11225600B84E4B /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 944EFC8D1F11225600B84E4B /* PreferencesWindow.xib */; };
 		94703F401F0E20F600D875E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94703F3F1F0E20F600D875E8 /* AppDelegate.swift */; };
 		94703F421F0E20F600D875E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94703F411F0E20F600D875E8 /* Assets.xcassets */; };
 		94703F451F0E20F600D875E8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94703F431F0E20F600D875E8 /* MainMenu.xib */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
+		944EFC8C1F11225600B84E4B /* PreferencesWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
+		944EFC8D1F11225600B84E4B /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		94703F3C1F0E20F600D875E8 /* EmpyreanEyes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmpyreanEyes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94703F3F1F0E20F600D875E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94703F411F0E20F600D875E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,6 +81,8 @@
 			children = (
 				94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */,
 				94703F3F1F0E20F600D875E8 /* AppDelegate.swift */,
+				944EFC8C1F11225600B84E4B /* PreferencesWindow.swift */,
+				944EFC8D1F11225600B84E4B /* PreferencesWindow.xib */,
 				94703F411F0E20F600D875E8 /* Assets.xcassets */,
 				94703F431F0E20F600D875E8 /* MainMenu.xib */,
 				94703F461F0E20F600D875E8 /* Info.plist */,
@@ -179,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94703F421F0E20F600D875E8 /* Assets.xcassets in Resources */,
+				944EFC8F1F11225600B84E4B /* PreferencesWindow.xib in Resources */,
 				94703F451F0E20F600D875E8 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94104D3F1F0E29DE00C44E81 /* StatusMenuController.swift in Sources */,
+				944EFC8E1F11225600B84E4B /* PreferencesWindow.swift in Sources */,
 				94703F401F0E20F600D875E8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,7 +339,7 @@
 				DEVELOPMENT_TEAM = AAT74C9589;
 				INFOPLIST_FILE = EmpyreanEyes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.skywang.EmpyreanEyes;
+				PRODUCT_BUNDLE_IDENTIFIER = me.skywang.EmpyreanEyes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -346,7 +354,7 @@
 				DEVELOPMENT_TEAM = AAT74C9589;
 				INFOPLIST_FILE = EmpyreanEyes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.skywang.EmpyreanEyes;
+				PRODUCT_BUNDLE_IDENTIFIER = me.skywang.EmpyreanEyes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

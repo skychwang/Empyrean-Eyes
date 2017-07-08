@@ -9,6 +9,8 @@
 import Cocoa
 import CoreLocation
 
+let DEFAULT_INTERVAL = "5"
+
 extension CLLocationCoordinate2D {
     var latitudeMinutes:  Double {
         return latitude.multiplied(by: 3600)
@@ -62,7 +64,7 @@ extension NSImage {
     }
 }
 
-class StatusMenuController: NSObject, CLLocationManagerDelegate {
+class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWindowDelegate {
     
     @IBOutlet weak var statusMenu: NSMenu!
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
@@ -79,6 +81,18 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate {
     var image:NSImage!
     var data:Data!
     var workspace = NSWorkspace.shared()
+    var preferencesWindow: PreferencesWindow!
+    var varInterval:Int!
+    
+    func preferencesDidUpdate() {
+        updateInterval()
+    }
+    
+    func updateInterval() {
+        let defaults = UserDefaults.standard
+        let interval = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
+        self.varInterval = Int(interval)!
+    }
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {
         NSApplication.shared().terminate(self)
@@ -86,7 +100,13 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate {
     
     @IBAction func updateClicked(_ sender: NSMenuItem) {
         updateLocation()
+        //print(varInterval)
     }
+    
+    @IBAction func preferencesClicked(_ sender: NSMenuItem) {
+        preferencesWindow.showWindow(nil)
+    }
+    
     
     func jdFromDate(date : NSDate) -> Double {
         let JD_JAN_1_1970_0000GMT = 2440587.5
@@ -110,6 +130,9 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate {
         rect = screen.frame
         screenHeight = String(Int(rect.size.height))
         screenWidth = String(Int(rect.size.width))
+        preferencesWindow = PreferencesWindow()
+        preferencesWindow.delegate = self
+        updateInterval()
         setupLocationManager()
     }
     
@@ -123,7 +146,6 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate {
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager?.startUpdatingLocation()
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
