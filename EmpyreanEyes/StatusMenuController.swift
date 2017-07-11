@@ -80,7 +80,7 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
     var screenWidth:String = ""
     var image:NSImage!
     var data:Data!
-    var workspace = NSWorkspace.shared()
+    let workspace = NSWorkspace.shared()
     var preferencesWindow: PreferencesWindow!
     var varInterval:Int!
     
@@ -184,8 +184,8 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
         ra = String(GAST.truncatingRemainder(dividingBy: 24) + (locationValue.longitude / 15))
         //ra = String(GMST.truncatingRemainder(dividingBy: 24) + (locationValue.longitude / 15)) //GMST seems to be closer to value from USNO but GAST is supposed to be the correct value
         dec = String(locationValue.latitude) //The declination at the zenith is equal to the site's latitude; therefore, the zenith for an observer at 45°N will be +45°.
-        
-        astroPicURL = URL(string: "https://skyserver.sdss.org/dr13/SkyServerWS/ImgCutout/getjpeg?ra=" + ra + "&dec=" + dec + "&scale=0.79224&width=" + screenWidth + "&height=" + screenHeight)
+        astroPicURL = URL(string: "https://skyserver.sdss.org/dr13/SkyServerWS/ImgCutout/getjpeg?ra=" + ra + "&dec=" + dec + "&scale=1&width=" + screenWidth + "&height=" + screenHeight)
+        print("Image URL: " + astroPicURL.absoluteString)
         
         do {
             data = try Data(contentsOf: astroPicURL)
@@ -201,13 +201,19 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
             }
             
             do {
-                try workspace.setDesktopImageURL(destinationURL, for: screen, options: [:])
+                guard var options = workspace.desktopImageOptions(for: screen) else {
+                    return
+                }
+                options[NSWorkspaceDesktopImageScalingKey] = NSNumber(value: NSImageScaling.scaleAxesIndependently.rawValue)
+                options[NSWorkspaceDesktopImageAllowClippingKey] = true
+                
+                try workspace.setDesktopImageURL(destinationURL, for: screen, options: options)
                 print("Desktop Changed.")
             } catch {
                 print("--------------------")
                 print("ALERT: Cannot change desktop image.")
                 print("ERROR: ")
-                print(error)
+                print(error.localizedDescription)
                 print("--------------------")
                 //Add some error stuff in statusbar window if cannot fetch image
             }
@@ -217,7 +223,7 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
             print("ALERT: Cannot get png from url: ")
             print(astroPicURL)
             print("ERROR: ")
-            print(error)
+            print(error.localizedDescription)
             print("--------------------")
             //Add some error stuff in statusbar window if cannot fetch image
         }
