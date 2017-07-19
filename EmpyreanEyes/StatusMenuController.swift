@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoreLocation
+import Foundation
 
 let DEFAULT_INTERVAL = "5"
 
@@ -83,7 +84,8 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
     let workspace = NSWorkspace.shared()
     var preferencesWindow: PreferencesWindow!
     var varInterval:Int!
-    
+    weak var timer: Timer?
+
     func preferencesDidUpdate() {
         updateInterval()
     }
@@ -92,6 +94,8 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
         let defaults = UserDefaults.standard
         let interval = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
         self.varInterval = Int(interval)!
+        stopAutoRefresh()
+        startAutoRefresh(interval: self.varInterval)
     }
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {
@@ -134,6 +138,17 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
         preferencesWindow.delegate = self
         updateInterval()
         setupLocationManager()
+        startAutoRefresh(interval: self.varInterval)
+    }
+    
+    func startAutoRefresh(interval:Int) {
+        timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(interval)*60, repeats: true) { [weak self] _ in
+            self?.updateLocation()
+        }
+    }
+    
+    func stopAutoRefresh() {
+        timer?.invalidate()
     }
     
     func updateLocation() {

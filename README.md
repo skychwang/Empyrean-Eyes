@@ -12,7 +12,7 @@ Update button and function ✓
 Preferences button and window ✓  
 Update and persist auto-update/fetch interval from preferences window ✓  
 Image scaling ✓  
-Implement auto-update async loop  
+Implement auto-update async loop ✓  
 In-menu unintrusive error messages  
 ...more to come.  
 
