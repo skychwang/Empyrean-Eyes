@@ -28,6 +28,20 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="kqb-R2-1xH"/>
+                <menuItem id="t4F-p5-pEh">
+                    <attributedString key="attributedTitle"/>
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <binding destination="XUz-Kw-Ezj" name="title" keyPath="menuLog" id="PGw-ni-zzj"/>
+                    </connections>
+                </menuItem>
+                <menuItem id="aWp-Lr-bSJ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <binding destination="XUz-Kw-Ezj" name="title" keyPath="lastUpdated" id="eT0-XO-rsp"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="JXR-ws-qVI"/>
                 <menuItem title="Preferences" id="RiJ-rv-x9k">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

@@ -85,6 +85,8 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
     var preferencesWindow: PreferencesWindow!
     var varInterval:Int!
     weak var timer: Timer?
+    dynamic var menuLog = "Log Loading..."
+    dynamic var lastUpdated = "Last Updated: ..."
 
     func preferencesDidUpdate() {
         updateInterval()
@@ -201,11 +203,13 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
         dec = String(locationValue.latitude) //The declination at the zenith is equal to the site's latitude; therefore, the zenith for an observer at 45°N will be +45°.
         astroPicURL = URL(string: "https://skyserver.sdss.org/dr13/SkyServerWS/ImgCutout/getjpeg?ra=" + ra + "&dec=" + dec + "&scale=1&width=" + screenWidth + "&height=" + screenHeight)
         print("Image URL: " + astroPicURL.absoluteString)
+        self.menuLog = "Current Log: Image URL: " + astroPicURL.absoluteString
         
         do {
             data = try Data(contentsOf: astroPicURL)
             image = NSImage(data: data)
             print("Image fetched.")
+            self.menuLog = "Current Log: Image fetched."
             
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             
@@ -213,6 +217,7 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
             
             if image.pngWrite(to: destinationURL) {
                 print("File saved.")
+                self.menuLog = "Current Log: Image file saved locally."
             }
             
             do {
@@ -224,12 +229,17 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
                 
                 try workspace.setDesktopImageURL(destinationURL, for: screen, options: options)
                 print("Desktop Changed.")
+                self.menuLog = "Current Log: Desktop changed successfully."
+                
+                NSTimeZone.default = NSTimeZone.system
+                self.lastUpdated = "Last Updated: " + Date().description(with: Locale.current)
             } catch {
                 print("--------------------")
                 print("ALERT: Cannot change desktop image.")
                 print("ERROR: ")
                 print(error.localizedDescription)
                 print("--------------------")
+                self.menuLog = "Current Log: ERROR: Cannot change desktop image."
                 //Add some error stuff in statusbar window if cannot fetch image
             }
 
@@ -240,6 +250,7 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
             print("ERROR: ")
             print(error.localizedDescription)
             print("--------------------")
+            self.menuLog = "Current Log: ERROR: Cannot get image from url. Either the internet request failed, or you're out of range for available images."
             //Add some error stuff in statusbar window if cannot fetch image
         }
         

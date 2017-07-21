@@ -13,8 +13,9 @@ Preferences button and window ✓
 Update and persist auto-update/fetch interval from preferences window ✓  
 Image scaling ✓  
 Implement auto-update async loop ✓  
-In-menu unintrusive error messages  
-...more to come.  
+In-menu unintrusive error messages ✓  
+Option to start on login  
+...more features to come in the future.  
 
 ## Building
 
