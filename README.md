@@ -15,6 +15,7 @@ Image scaling ✓
 Implement auto-update async loop ✓  
 In-menu unintrusive error messages ✓  
 Option to start on login  
+Multiple sources and spectra  
 ...more features to come in the future.  
 
 ## Building
