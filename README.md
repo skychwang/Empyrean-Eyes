@@ -26,6 +26,12 @@ Empyrean Eyes is XCode 8.2.1 Compatible and targets 10.12 (Mac OS X Sierra) upwa
 
 Native OS X app written in Swift 3 and built with XCode. Utilizes location services and the calculation featured at the [USNO](http://aa.usno.navy.mil/faq/docs/GAST.php) to compute the Right Ascension and Declination of the zenith at current user location, which is fed into the Sloan Digital Sky Survey's [DR13 Finding Chart Tool](http://skyserver.sdss.org/dr13/en/tools/chart/chartinfo.aspx) to return the image at the correct dimensions then used to set the desktop wallpaper.
 
+## Screenshots  
+
+![Taskbar Menu](images/1.png?raw=true "Taskbar Menu")
+![Preferences](images/2.png?raw=true "Preferences")
+![Fetched Image](images/3.png?raw=true "Fetched Image")
+
 ## Known Issue(s)
 
 Users at certain locations may experience perodic outages in sky survey images as the RA's (changes with time) corresponding DEC (fixed to the longitude of the user's position) at zenith may be out of the SDSS's recorded range.
