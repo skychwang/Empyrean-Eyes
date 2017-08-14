@@ -18,9 +18,10 @@ Option to start on login
 Multiple sources and spectra  
 ...more features to come in the future.  
 
-## Building
+## Building / Running
 
-Empyrean Eyes is XCode 8.2.1 Compatible and targets 10.12 (Mac OS X Sierra) upwards.
+Empyrean Eyes is XCode 8.2.1 Compatible and targets 10.12 (Mac OS X Sierra) upwards.  
+To download an .app file of the project, navigate to Github releases and download the latest version.  
 
 ## How I built it
 
