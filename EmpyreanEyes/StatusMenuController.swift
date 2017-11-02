@@ -92,10 +92,24 @@ class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWind
         updateInterval()
     }
     
+    func isStringAnInt(string: String) -> Bool {
+        return Int(string) != nil
+    }
+    
     func updateInterval() {
         let defaults = UserDefaults.standard
         let interval = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
-        self.varInterval = Int(interval)!
+        if isStringAnInt(string: interval) {
+            self.varInterval = Int(interval)!
+        } else {
+            self.varInterval = Int(DEFAULT_INTERVAL)
+            self.menuLog = "Current Log: Error: Value entered for interval update interval, " + interval + ", was not an integer. The auto-refresh rate has been reset to " + String(DEFAULT_INTERVAL) + "."
+            print("--------------------")
+            print("ALERT: Cannot change desktop image.")
+            print("ERROR: ")
+            print(self.menuLog)
+            print("--------------------")
+        }
         stopAutoRefresh()
         startAutoRefresh(interval: self.varInterval)
     }
