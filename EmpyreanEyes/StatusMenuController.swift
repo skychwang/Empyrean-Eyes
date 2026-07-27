@@ -233,8 +233,8 @@ final class StatusMenuController: NSObject {
                     fileURL = existing
                 } else {
                     statusMessage = "Fetching \(key) view of the sky…"
-                    let image = try await service.fetchImage(for: zenith, pixelSize: size)
-                    fileURL = try WallpaperSetter.writeImage(image, token: "\(token)-\(index)-\(key)")
+                    let data = try await service.fetchImageData(for: zenith, pixelSize: size)
+                    fileURL = try WallpaperSetter.writeImage(data, token: "\(token)-\(index)-\(key)")
                     imagesBySize[key] = fileURL
                 }
                 try WallpaperSetter.apply(fileURL, to: screen)

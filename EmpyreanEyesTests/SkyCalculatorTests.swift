@@ -206,6 +206,14 @@ struct SkyImageServiceTests {
         #expect(!SkyImageService.isEffectivelyBlank(bright))
     }
 
+    @Test("Real image data decodes; junk does not")
+    func decodability() throws {
+        let jpeg = try #require(solidColorJPEG(white: 0.5))
+        #expect(SkyImageService.isDecodableImage(jpeg))
+        #expect(!SkyImageService.isDecodableImage(Data("not an image".utf8)))
+        #expect(!SkyImageService.isDecodableImage(Data()))
+    }
+
     private func solidColorJPEG(white: CGFloat) -> Data? {
         let size = NSSize(width: 64, height: 64)
         let image = NSImage(size: size)

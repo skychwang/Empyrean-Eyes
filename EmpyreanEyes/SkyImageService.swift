@@ -5,8 +5,9 @@
 //  Fetches a cutout of the sky from the SDSS SkyServer image service.
 //
 
-import AppKit
+import CoreGraphics
 import Foundation
+import ImageIO
 
 /// SDSS data releases the image cutout service is known to serve.
 enum SkyServerRelease: String, CaseIterable, Sendable {
@@ -55,9 +56,16 @@ struct SkyImageService: Sendable {
         return components.url!
     }
 
-    /// Downloads the cutout. Throws `.outsideSurveyFootprint` when SDSS answers
-    /// with the all-but-black tile it serves for unobserved sky.
-    func fetchImage(for coordinate: EquatorialCoordinate, pixelSize: CGSize) async throws -> NSImage {
+    /// Downloads the cutout and returns the raw JPEG bytes.
+    ///
+    /// Deliberately `Data` and not `NSImage`: `NSImage` is not `Sendable`, so
+    /// handing one back to the main actor fails to compile on Swift 6. Passing
+    /// the bytes also skips a needless decode-and-re-encode — the JPEG goes
+    /// straight to disk and straight to the desktop.
+    ///
+    /// Throws `.outsideSurveyFootprint` when SDSS has no imagery for the
+    /// requested patch of sky.
+    func fetchImageData(for coordinate: EquatorialCoordinate, pixelSize: CGSize) async throws -> Data {
         let url = imageURL(for: coordinate, pixelSize: pixelSize)
 
         var request = URLRequest(url: url)
@@ -75,13 +83,21 @@ struct SkyImageService: Sendable {
             }
             throw SkyImageError.badResponse(status: http.statusCode)
         }
-        guard let image = NSImage(data: data), image.size.width > 0 else {
+        guard Self.isDecodableImage(data) else {
             throw SkyImageError.notAnImage
         }
         guard !Self.isEffectivelyBlank(data) else {
             throw SkyImageError.outsideSurveyFootprint
         }
-        return image
+        return data
+    }
+
+    static func isDecodableImage(_ data: Data) -> Bool {
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil),
+              CGImageSourceGetCount(source) > 0,
+              CGImageSourceCreateImageAtIndex(source, 0, nil) != nil
+        else { return false }
+        return true
     }
 
     private static let userAgent =

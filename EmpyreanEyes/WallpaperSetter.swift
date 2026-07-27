@@ -51,21 +51,19 @@ enum WallpaperSetter {
         return directory
     }
 
-    /// Writes `image` as a PNG under a name unique to this update.
+    /// Writes the downloaded JPEG under a name unique to this update.
     ///
     /// The name has to change every time. macOS keys its desktop-picture cache
     /// on the file URL, so overwriting one fixed path leaves the old wallpaper
     /// on screen — the bug that made the original app look like it had stopped
     /// working after its first update.
-    static func writeImage(_ image: NSImage, token: String) throws -> URL {
-        guard let tiff = image.tiffRepresentation,
-              let bitmap = NSBitmapImageRep(data: tiff),
-              let png = bitmap.representation(using: .png, properties: [:])
-        else {
-            throw CocoaError(.fileWriteUnknown)
-        }
-        let url = try imageDirectory().appendingPathComponent("sky-\(token).png")
-        try png.write(to: url, options: .atomic)
+    ///
+    /// The bytes are written as they arrived. Decoding and re-encoding to PNG,
+    /// as this once did, cost time and turned a ~500 KB download into a 6 MB
+    /// file without recovering any detail the JPEG had already discarded.
+    static func writeImage(_ data: Data, token: String) throws -> URL {
+        let url = try imageDirectory().appendingPathComponent("sky-\(token).jpg")
+        try data.write(to: url, options: .atomic)
         return url
     }
 
@@ -79,6 +77,8 @@ enum WallpaperSetter {
     }
 
     /// Deletes previously generated wallpapers, sparing anything currently in use.
+    ///
+    /// `png` is still swept up: versions before 2.0.1 wrote PNGs here.
     static func pruneOldImages(keeping inUse: Set<URL>) {
         guard let directory = try? imageDirectory() else { return }
         let keep = Set(inUse.map(\.standardizedFileURL.path))
@@ -87,7 +87,7 @@ enum WallpaperSetter {
             includingPropertiesForKeys: nil
         )) ?? []
 
-        for url in contents where url.pathExtension == "png" {
+        for url in contents where ["jpg", "png"].contains(url.pathExtension) {
             guard !keep.contains(url.standardizedFileURL.path) else { continue }
             try? FileManager.default.removeItem(at: url)
         }
