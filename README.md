@@ -67,8 +67,9 @@ xcodebuild -scheme EmpyreanEyes -configuration Release build
 xcodebuild -scheme EmpyreanEyes test
 ```
 
-Xcode 26 or later, Swift 6. The project signs ad-hoc by default, so it builds
-with no Apple Developer account and no team configured.
+Xcode 16.4 or later, Swift 6 language mode. The project signs ad-hoc by
+default, so it builds with no Apple Developer account and no team configured.
+CI builds and tests every push on a macOS runner.
 
 ## Screenshots
 
