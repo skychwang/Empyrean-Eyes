@@ -2,20 +2,19 @@
 //  AppDelegate.swift
 //  EmpyreanEyes
 //
-//  Created by Sky Wang on 7/6/17.
-//  Copyright © 2017 Sky Wang. All rights reserved.
-//
 
-import Cocoa
+import AppKit
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
-    
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+@MainActor
+final class AppDelegate: NSObject, NSApplicationDelegate {
+
+    private let statusMenuController = StatusMenuController()
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        statusMenuController.start()
     }
 
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+        true
     }
 }
-

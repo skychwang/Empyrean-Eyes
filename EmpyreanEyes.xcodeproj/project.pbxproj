@@ -3,52 +3,59 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		94104D3F1F0E29DE00C44E81 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */; };
-		944EFC8E1F11225600B84E4B /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EFC8C1F11225600B84E4B /* PreferencesWindow.swift */; };
-		944EFC8F1F11225600B84E4B /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 944EFC8D1F11225600B84E4B /* PreferencesWindow.xib */; };
-		94703F401F0E20F600D875E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94703F3F1F0E20F600D875E8 /* AppDelegate.swift */; };
-		94703F421F0E20F600D875E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94703F411F0E20F600D875E8 /* Assets.xcassets */; };
-		94703F451F0E20F600D875E8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94703F431F0E20F600D875E8 /* MainMenu.xib */; };
-		94703F501F0E20F600D875E8 /* EmpyreanEyesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94703F4F1F0E20F600D875E8 /* EmpyreanEyesTests.swift */; };
+		EE0000000000000000000B01 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A01 /* main.swift */; };
+		EE0000000000000000000B02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A02 /* AppDelegate.swift */; };
+		EE0000000000000000000B03 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A03 /* StatusMenuController.swift */; };
+		EE0000000000000000000B04 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A04 /* PreferencesWindowController.swift */; };
+		EE0000000000000000000B05 /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A05 /* LocationProvider.swift */; };
+		EE0000000000000000000B06 /* SkyCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A06 /* SkyCalculator.swift */; };
+		EE0000000000000000000B07 /* SkyImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A07 /* SkyImageService.swift */; };
+		EE0000000000000000000B08 /* WallpaperSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A08 /* WallpaperSetter.swift */; };
+		EE0000000000000000000B09 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A09 /* Preferences.swift */; };
+		EE0000000000000000000B0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A0A /* Assets.xcassets */; };
+		EE0000000000000000000B0B /* SkyCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0000000000000000000A0C /* SkyCalculatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		94703F4C1F0E20F600D875E8 /* PBXContainerItemProxy */ = {
+		EE0000000000000000000F02 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 94703F341F0E20F600D875E8 /* Project object */;
+			containerPortal = EE00000000000000000000A1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 94703F3B1F0E20F600D875E8;
+			remoteGlobalIDString = EE00000000000000000000B1;
 			remoteInfo = EmpyreanEyes;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
-		944EFC8C1F11225600B84E4B /* PreferencesWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
-		944EFC8D1F11225600B84E4B /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
-		94703F3C1F0E20F600D875E8 /* EmpyreanEyes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmpyreanEyes.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		94703F3F1F0E20F600D875E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		94703F411F0E20F600D875E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		94703F441F0E20F600D875E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		94703F461F0E20F600D875E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94703F4B1F0E20F600D875E8 /* EmpyreanEyesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmpyreanEyesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		94703F4F1F0E20F600D875E8 /* EmpyreanEyesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpyreanEyesTests.swift; sourceTree = "<group>"; };
-		94703F511F0E20F600D875E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE0000000000000000000A01 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A03 /* StatusMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A04 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A05 /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A06 /* SkyCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyCalculator.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A07 /* SkyImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyImageService.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A08 /* WallpaperSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpaperSetter.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A09 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EE0000000000000000000A0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE0000000000000000000A0C /* SkyCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyCalculatorTests.swift; sourceTree = "<group>"; };
+		EE0000000000000000000A0D /* EmpyreanEyes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmpyreanEyes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE0000000000000000000A0E /* EmpyreanEyesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmpyreanEyesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		94703F391F0E20F600D875E8 /* Frameworks */ = {
+		EE00000000000000000000C2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		94703F481F0E20F600D875E8 /* Frameworks */ = {
+		EE00000000000000000000C5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -58,43 +65,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		94703F331F0E20F600D875E8 = {
+		EE00000000000000000000A2 = {
 			isa = PBXGroup;
 			children = (
-				94703F3E1F0E20F600D875E8 /* EmpyreanEyes */,
-				94703F4E1F0E20F600D875E8 /* EmpyreanEyesTests */,
-				94703F3D1F0E20F600D875E8 /* Products */,
+				EE00000000000000000000A4 /* EmpyreanEyes */,
+				EE00000000000000000000A5 /* EmpyreanEyesTests */,
+				EE00000000000000000000A3 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		94703F3D1F0E20F600D875E8 /* Products */ = {
+		EE00000000000000000000A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				94703F3C1F0E20F600D875E8 /* EmpyreanEyes.app */,
-				94703F4B1F0E20F600D875E8 /* EmpyreanEyesTests.xctest */,
+				EE0000000000000000000A0D /* EmpyreanEyes.app */,
+				EE0000000000000000000A0E /* EmpyreanEyesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		94703F3E1F0E20F600D875E8 /* EmpyreanEyes */ = {
+		EE00000000000000000000A4 /* EmpyreanEyes */ = {
 			isa = PBXGroup;
 			children = (
-				94104D3E1F0E29DE00C44E81 /* StatusMenuController.swift */,
-				94703F3F1F0E20F600D875E8 /* AppDelegate.swift */,
-				944EFC8C1F11225600B84E4B /* PreferencesWindow.swift */,
-				944EFC8D1F11225600B84E4B /* PreferencesWindow.xib */,
-				94703F411F0E20F600D875E8 /* Assets.xcassets */,
-				94703F431F0E20F600D875E8 /* MainMenu.xib */,
-				94703F461F0E20F600D875E8 /* Info.plist */,
+				EE0000000000000000000A01 /* main.swift */,
+				EE0000000000000000000A02 /* AppDelegate.swift */,
+				EE0000000000000000000A03 /* StatusMenuController.swift */,
+				EE0000000000000000000A04 /* PreferencesWindowController.swift */,
+				EE0000000000000000000A05 /* LocationProvider.swift */,
+				EE0000000000000000000A06 /* SkyCalculator.swift */,
+				EE0000000000000000000A07 /* SkyImageService.swift */,
+				EE0000000000000000000A08 /* WallpaperSetter.swift */,
+				EE0000000000000000000A09 /* Preferences.swift */,
+				EE0000000000000000000A0A /* Assets.xcassets */,
+				EE0000000000000000000A0B /* Info.plist */,
 			);
 			path = EmpyreanEyes;
 			sourceTree = "<group>";
 		};
-		94703F4E1F0E20F600D875E8 /* EmpyreanEyesTests */ = {
+		EE00000000000000000000A5 /* EmpyreanEyesTests */ = {
 			isa = PBXGroup;
 			children = (
-				94703F4F1F0E20F600D875E8 /* EmpyreanEyesTests.swift */,
-				94703F511F0E20F600D875E8 /* Info.plist */,
+				EE0000000000000000000A0C /* SkyCalculatorTests.swift */,
 			);
 			path = EmpyreanEyesTests;
 			sourceTree = "<group>";
@@ -102,13 +112,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		94703F3B1F0E20F600D875E8 /* EmpyreanEyes */ = {
+		EE00000000000000000000B1 /* EmpyreanEyes */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 94703F541F0E20F600D875E8 /* Build configuration list for PBXNativeTarget "EmpyreanEyes" */;
+			buildConfigurationList = EE00000000000000000000D2 /* Build configuration list for PBXNativeTarget "EmpyreanEyes" */;
 			buildPhases = (
-				94703F381F0E20F600D875E8 /* Sources */,
-				94703F391F0E20F600D875E8 /* Frameworks */,
-				94703F3A1F0E20F600D875E8 /* Resources */,
+				EE00000000000000000000C1 /* Sources */,
+				EE00000000000000000000C2 /* Frameworks */,
+				EE00000000000000000000C3 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -116,81 +126,78 @@
 			);
 			name = EmpyreanEyes;
 			productName = EmpyreanEyes;
-			productReference = 94703F3C1F0E20F600D875E8 /* EmpyreanEyes.app */;
+			productReference = EE0000000000000000000A0D /* EmpyreanEyes.app */;
 			productType = "com.apple.product-type.application";
 		};
-		94703F4A1F0E20F600D875E8 /* EmpyreanEyesTests */ = {
+		EE00000000000000000000B2 /* EmpyreanEyesTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 94703F571F0E20F600D875E8 /* Build configuration list for PBXNativeTarget "EmpyreanEyesTests" */;
+			buildConfigurationList = EE00000000000000000000D3 /* Build configuration list for PBXNativeTarget "EmpyreanEyesTests" */;
 			buildPhases = (
-				94703F471F0E20F600D875E8 /* Sources */,
-				94703F481F0E20F600D875E8 /* Frameworks */,
-				94703F491F0E20F600D875E8 /* Resources */,
+				EE00000000000000000000C4 /* Sources */,
+				EE00000000000000000000C5 /* Frameworks */,
+				EE00000000000000000000C6 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				94703F4D1F0E20F600D875E8 /* PBXTargetDependency */,
+				EE0000000000000000000F01 /* PBXTargetDependency */,
 			);
 			name = EmpyreanEyesTests;
 			productName = EmpyreanEyesTests;
-			productReference = 94703F4B1F0E20F600D875E8 /* EmpyreanEyesTests.xctest */;
+			productReference = EE0000000000000000000A0E /* EmpyreanEyesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		94703F341F0E20F600D875E8 /* Project object */ = {
+		EE00000000000000000000A1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
 				ORGANIZATIONNAME = "Sky Wang";
 				TargetAttributes = {
-					94703F3B1F0E20F600D875E8 = {
+					EE00000000000000000000B1 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = AAT74C9589;
 						ProvisioningStyle = Automatic;
 					};
-					94703F4A1F0E20F600D875E8 = {
+					EE00000000000000000000B2 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = AAT74C9589;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 94703F3B1F0E20F600D875E8;
+						TestTargetID = EE00000000000000000000B1;
 					};
 				};
 			};
-			buildConfigurationList = 94703F371F0E20F600D875E8 /* Build configuration list for PBXProject "EmpyreanEyes" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			buildConfigurationList = EE00000000000000000000D1 /* Build configuration list for PBXProject "EmpyreanEyes" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 94703F331F0E20F600D875E8;
-			productRefGroup = 94703F3D1F0E20F600D875E8 /* Products */;
+			mainGroup = EE00000000000000000000A2;
+			productRefGroup = EE00000000000000000000A3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				94703F3B1F0E20F600D875E8 /* EmpyreanEyes */,
-				94703F4A1F0E20F600D875E8 /* EmpyreanEyesTests */,
+				EE00000000000000000000B1 /* EmpyreanEyes */,
+				EE00000000000000000000B2 /* EmpyreanEyesTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		94703F3A1F0E20F600D875E8 /* Resources */ = {
+		EE00000000000000000000C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94703F421F0E20F600D875E8 /* Assets.xcassets in Resources */,
-				944EFC8F1F11225600B84E4B /* PreferencesWindow.xib in Resources */,
-				94703F451F0E20F600D875E8 /* MainMenu.xib in Resources */,
+				EE0000000000000000000B0A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		94703F491F0E20F600D875E8 /* Resources */ = {
+		EE00000000000000000000C6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -200,73 +207,81 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		94703F381F0E20F600D875E8 /* Sources */ = {
+		EE00000000000000000000C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94104D3F1F0E29DE00C44E81 /* StatusMenuController.swift in Sources */,
-				944EFC8E1F11225600B84E4B /* PreferencesWindow.swift in Sources */,
-				94703F401F0E20F600D875E8 /* AppDelegate.swift in Sources */,
+				EE0000000000000000000B01 /* main.swift in Sources */,
+				EE0000000000000000000B02 /* AppDelegate.swift in Sources */,
+				EE0000000000000000000B03 /* StatusMenuController.swift in Sources */,
+				EE0000000000000000000B04 /* PreferencesWindowController.swift in Sources */,
+				EE0000000000000000000B05 /* LocationProvider.swift in Sources */,
+				EE0000000000000000000B06 /* SkyCalculator.swift in Sources */,
+				EE0000000000000000000B07 /* SkyImageService.swift in Sources */,
+				EE0000000000000000000B08 /* WallpaperSetter.swift in Sources */,
+				EE0000000000000000000B09 /* Preferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		94703F471F0E20F600D875E8 /* Sources */ = {
+		EE00000000000000000000C4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94703F501F0E20F600D875E8 /* EmpyreanEyesTests.swift in Sources */,
+				EE0000000000000000000B0B /* SkyCalculatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		94703F4D1F0E20F600D875E8 /* PBXTargetDependency */ = {
+		EE0000000000000000000F01 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 94703F3B1F0E20F600D875E8 /* EmpyreanEyes */;
-			targetProxy = 94703F4C1F0E20F600D875E8 /* PBXContainerItemProxy */;
+			target = EE00000000000000000000B1 /* EmpyreanEyes */;
+			targetProxy = EE0000000000000000000F02 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		94703F431F0E20F600D875E8 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				94703F441F0E20F600D875E8 /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		94703F521F0E20F600D875E8 /* Debug */ = {
+		EE00000000000000000000E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -280,42 +295,59 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
-		94703F531F0E20F600D875E8 /* Release */ = {
+		EE00000000000000000000E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -323,71 +355,95 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
-		94703F551F0E20F600D875E8 /* Debug */ = {
+		EE00000000000000000000E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = AAT74C9589;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = EmpyreanEyes/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.skywang.EmpyreanEyes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Debug;
 		};
-		94703F561F0E20F600D875E8 /* Release */ = {
+		EE00000000000000000000E4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = AAT74C9589;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = EmpyreanEyes/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.skywang.EmpyreanEyes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
-		94703F581F0E20F600D875E8 /* Debug */ = {
+		EE00000000000000000000E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = AAT74C9589;
-				INFOPLIST_FILE = EmpyreanEyesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.skywang.EmpyreanEyesTests;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.skywang.EmpyreanEyesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmpyreanEyes.app/Contents/MacOS/EmpyreanEyes";
 			};
 			name = Debug;
 		};
-		94703F591F0E20F600D875E8 /* Release */ = {
+		EE00000000000000000000E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = AAT74C9589;
-				INFOPLIST_FILE = EmpyreanEyesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.skywang.EmpyreanEyesTests;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.skywang.EmpyreanEyesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmpyreanEyes.app/Contents/MacOS/EmpyreanEyes";
 			};
 			name = Release;
@@ -395,34 +451,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		94703F371F0E20F600D875E8 /* Build configuration list for PBXProject "EmpyreanEyes" */ = {
+		EE00000000000000000000D1 /* Build configuration list for PBXProject "EmpyreanEyes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				94703F521F0E20F600D875E8 /* Debug */,
-				94703F531F0E20F600D875E8 /* Release */,
+				EE00000000000000000000E1 /* Debug */,
+				EE00000000000000000000E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		94703F541F0E20F600D875E8 /* Build configuration list for PBXNativeTarget "EmpyreanEyes" */ = {
+		EE00000000000000000000D2 /* Build configuration list for PBXNativeTarget "EmpyreanEyes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				94703F551F0E20F600D875E8 /* Debug */,
-				94703F561F0E20F600D875E8 /* Release */,
+				EE00000000000000000000E3 /* Debug */,
+				EE00000000000000000000E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		94703F571F0E20F600D875E8 /* Build configuration list for PBXNativeTarget "EmpyreanEyesTests" */ = {
+		EE00000000000000000000D3 /* Build configuration list for PBXNativeTarget "EmpyreanEyesTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				94703F581F0E20F600D875E8 /* Debug */,
-				94703F591F0E20F600D875E8 /* Release */,
+				EE00000000000000000000E5 /* Debug */,
+				EE00000000000000000000E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 94703F341F0E20F600D875E8 /* Project object */;
+	rootObject = EE00000000000000000000A1 /* Project object */;
 }

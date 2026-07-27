@@ -2,278 +2,263 @@
 //  StatusMenuController.swift
 //  EmpyreanEyes
 //
-//  Created by Sky Wang on 7/6/17.
-//  Copyright © 2017 Sky Wang. All rights reserved.
+//  Owns the menu bar item and drives the update cycle.
 //
 
-import Cocoa
+import AppKit
 import CoreLocation
-import Foundation
+import OSLog
+import ServiceManagement
 
-let DEFAULT_INTERVAL = "5"
+@MainActor
+final class StatusMenuController: NSObject {
 
-extension CLLocationCoordinate2D {
-    var latitudeMinutes:  Double {
-        return latitude.multiplied(by: 3600)
-            .truncatingRemainder(dividingBy: 3600)
-            .divided(by: 60)
-    }
-    var latitudeSeconds:  Double {
-        return latitude.multiplied(by: 3600)
-            .truncatingRemainder(dividingBy: 3600)
-            .truncatingRemainder(dividingBy: 60)
-    }
-    
-    var longitudeMinutes: Double {
-        return longitude.multiplied(by: 3600)
-            .truncatingRemainder(dividingBy: 3600)
-            .divided(by: 60)
-    }
-    var longitudeSeconds: Double {
-        return longitude.multiplied(by: 3600)
-            .truncatingRemainder(dividingBy: 3600)
-            .truncatingRemainder(dividingBy: 60)
-    }
-    
-    var dms:(latitude: String, longitude: String) {
-        return (String(format:"%d° %d' %.4f\" %@",
-                       Int(abs(latitude)),
-                       Int(abs(latitudeMinutes)),
-                       abs(latitudeSeconds),
-                       latitude >= 0 ? "N" : "S"),
-                String(format:"%d° %d' %.4f\" %@",
-                       Int(abs(longitude)),
-                       Int(abs(longitudeMinutes)),
-                       abs(longitudeSeconds),
-                       longitude >= 0 ? "E" : "W"))
-    }
-}
+    private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    private let locationProvider = LocationProvider()
+    private let logger = Logger(subsystem: "me.skywang.EmpyreanEyes", category: "updates")
 
-extension NSImage {
-    var pngData: Data? {
-        guard let tiffRepresentation = tiffRepresentation, let bitmapImage = NSBitmapImageRep(data: tiffRepresentation) else { return nil }
-        return bitmapImage.representation(using: .PNG, properties: [:])
+    private lazy var preferencesWindowController = PreferencesWindowController { [weak self] in
+        self?.restartTimer()
     }
-    func pngWrite(to url: URL, options: Data.WritingOptions = .atomic) -> Bool {
+
+    private var timer: Timer?
+    private var updateTask: Task<Void, Never>?
+
+    private let statusMessageItem = NSMenuItem()
+    private let lastUpdatedItem = NSMenuItem()
+    private let launchAtLoginItem = NSMenuItem()
+
+    /// Menu width follows its longest item, so a wordy status line stretches the
+    /// whole menu across the screen. Show a clipped version and hang the full
+    /// text off the tooltip.
+    private static let statusLineLimit = 52
+
+    private var statusMessage = "Starting up…" {
+        didSet {
+            statusMessageItem.title = statusMessage.count > Self.statusLineLimit
+                ? statusMessage.prefix(Self.statusLineLimit - 1).trimmingCharacters(in: .whitespaces) + "…"
+                : statusMessage
+            statusMessageItem.toolTip = statusMessage
+        }
+    }
+
+    private var lastUpdated: Date? {
+        didSet {
+            guard let lastUpdated else {
+                lastUpdatedItem.title = "Never updated"
+                return
+            }
+            lastUpdatedItem.title = "Updated \(Self.timestampFormatter.string(from: lastUpdated))"
+        }
+    }
+
+    private static let timestampFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .medium
+        return formatter
+    }()
+
+    // MARK: - Setup
+
+    func start() {
+        configureStatusItem()
+        statusMessage = "Starting up…"
+        lastUpdated = nil
+        restartTimer()
+        updateNow()
+    }
+
+    private func configureStatusItem() {
+        if let button = statusItem.button {
+            let icon = NSImage(named: "statusIcon")
+            icon?.isTemplate = true
+            icon?.size = NSSize(width: 18, height: 18)
+            button.image = icon
+            button.image?.accessibilityDescription = "Empyrean Eyes"
+        }
+        statusItem.menu = buildMenu()
+    }
+
+    private func buildMenu() -> NSMenu {
+        let menu = NSMenu()
+        menu.autoenablesItems = false
+
+        let updateItem = NSMenuItem(
+            title: "Update Now",
+            action: #selector(updateClicked),
+            keyEquivalent: "r"
+        )
+        updateItem.target = self
+        menu.addItem(updateItem)
+
+        menu.addItem(.separator())
+
+        statusMessageItem.title = statusMessage
+        statusMessageItem.isEnabled = false
+        menu.addItem(statusMessageItem)
+
+        lastUpdatedItem.title = "Never updated"
+        lastUpdatedItem.isEnabled = false
+        menu.addItem(lastUpdatedItem)
+
+        menu.addItem(.separator())
+
+        let revealItem = NSMenuItem(
+            title: "Show Current Image in Finder",
+            action: #selector(revealClicked),
+            keyEquivalent: ""
+        )
+        revealItem.target = self
+        menu.addItem(revealItem)
+
+        launchAtLoginItem.title = "Launch at Login"
+        launchAtLoginItem.action = #selector(toggleLaunchAtLogin)
+        launchAtLoginItem.target = self
+        launchAtLoginItem.state = SMAppService.mainApp.status == .enabled ? .on : .off
+        menu.addItem(launchAtLoginItem)
+
+        let preferencesItem = NSMenuItem(
+            title: "Preferences…",
+            action: #selector(preferencesClicked),
+            keyEquivalent: ","
+        )
+        preferencesItem.target = self
+        menu.addItem(preferencesItem)
+
+        menu.addItem(.separator())
+
+        let quitItem = NSMenuItem(
+            title: "Quit Empyrean Eyes",
+            action: #selector(quitClicked),
+            keyEquivalent: "q"
+        )
+        quitItem.target = self
+        menu.addItem(quitItem)
+
+        return menu
+    }
+
+    // MARK: - Actions
+
+    @objc private func updateClicked() { updateNow() }
+
+    @objc private func preferencesClicked() {
+        NSApp.activate(ignoringOtherApps: true)
+        preferencesWindowController.showWindow(nil)
+    }
+
+    @objc private func quitClicked() { NSApp.terminate(self) }
+
+    @objc private func revealClicked() {
+        guard let directory = try? WallpaperSetter.imageDirectory() else { return }
+        NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: directory.path)
+    }
+
+    @objc private func toggleLaunchAtLogin() {
         do {
-            try pngData?.write(to: url, options: options)
-            return true
+            if SMAppService.mainApp.status == .enabled {
+                try SMAppService.mainApp.unregister()
+            } else {
+                try SMAppService.mainApp.register()
+            }
         } catch {
-            print(error.localizedDescription)
-            return false
+            logger.error("Launch at login toggle failed: \(error.localizedDescription)")
+            statusMessage = "Could not change launch-at-login setting."
         }
+        launchAtLoginItem.state = SMAppService.mainApp.status == .enabled ? .on : .off
     }
-}
 
-class StatusMenuController: NSObject, CLLocationManagerDelegate, PreferencesWindowDelegate {
-    
-    @IBOutlet weak var statusMenu: NSMenu!
-    let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
-    var locationManager:CLLocationManager!
-    var currentLocation:CLLocation?
-    //var count = 0
-    var ra:String = ""
-    var dec:String = ""
-    var astroPicURL:URL!
-    var screen:NSScreen!
-    var rect:NSRect!
-    var screenHeight:String = ""
-    var screenWidth:String = ""
-    var image:NSImage!
-    var data:Data!
-    let workspace = NSWorkspace.shared()
-    var preferencesWindow: PreferencesWindow!
-    var varInterval:Int!
-    weak var timer: Timer?
-    dynamic var menuLog = "Log Loading..."
-    dynamic var lastUpdated = "Last Updated: ..."
+    // MARK: - Update cycle
 
-    func preferencesDidUpdate() {
-        updateInterval()
-    }
-    
-    func isStringAnInt(string: String) -> Bool {
-        return Int(string) != nil
-    }
-    
-    func updateInterval() {
-        let defaults = UserDefaults.standard
-        let interval = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
-        if isStringAnInt(string: interval) {
-            self.varInterval = Int(interval)!
-        } else {
-            self.varInterval = Int(DEFAULT_INTERVAL)
-            self.menuLog = "Current Log: Error: Value entered for interval update interval, " + interval + ", was not an integer. The auto-refresh rate has been reset to " + String(DEFAULT_INTERVAL) + "."
-            print("--------------------")
-            print("ALERT: Cannot change desktop image.")
-            print("ERROR: ")
-            print(self.menuLog)
-            print("--------------------")
-        }
-        stopAutoRefresh()
-        startAutoRefresh(interval: self.varInterval)
-    }
-    
-    @IBAction func quitClicked(_ sender: NSMenuItem) {
-        NSApplication.shared().terminate(self)
-    }
-    
-    @IBAction func updateClicked(_ sender: NSMenuItem) {
-        updateLocation()
-        //print(varInterval)
-    }
-    
-    @IBAction func preferencesClicked(_ sender: NSMenuItem) {
-        preferencesWindow.showWindow(nil)
-    }
-    
-    
-    func jdFromDate(date : NSDate) -> Double {
-        let JD_JAN_1_1970_0000GMT = 2440587.5
-        return JD_JAN_1_1970_0000GMT + date.timeIntervalSince1970 / 86400
-    }
-    
-    func dateFromJd(jd : Double) -> NSDate {
-        let JD_JAN_1_1970_0000GMT = 2440587.5
-        return  NSDate(timeIntervalSince1970: (jd - JD_JAN_1_1970_0000GMT) * 86400)
-    }
-    
-    override func awakeFromNib() {
-        //statusItem.title = "EmpyreanEyes"
-        statusItem.menu = statusMenu
-        let icon = NSImage(named: "statusIcon")
-        icon?.isTemplate = true // best for dark mode
-        statusItem.image = icon
-        statusItem.menu = statusMenu
-        //Init screen resolution size
-        screen = NSScreen.main()!
-        rect = screen.frame
-        screenHeight = String(Int(rect.size.height))
-        screenWidth = String(Int(rect.size.width))
-        preferencesWindow = PreferencesWindow()
-        preferencesWindow.delegate = self
-        updateInterval()
-        setupLocationManager()
-        startAutoRefresh(interval: self.varInterval)
-    }
-    
-    func startAutoRefresh(interval:Int) {
-        timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(interval)*60, repeats: true) { [weak self] _ in
-            self?.updateLocation()
-        }
-    }
-    
-    func stopAutoRefresh() {
+    private func restartTimer() {
         timer?.invalidate()
-    }
-    
-    func updateLocation() {
-        self.locationManager.delegate = self
-        self.locationManager.startUpdatingLocation()
-    }
-    
-    func setupLocationManager(){
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager?.startUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.last
-        let locationValue:CLLocationCoordinate2D = manager.location!.coordinate
-        
-        //RA of Zenith Conversion Method From Longitude
-        
-        let locale = NSTimeZone.init(abbreviation: "UTC")
-        NSTimeZone.default = locale as! TimeZone
-        
-        let gregorian = Calendar(identifier: .gregorian)
-        let now = Date()
-        var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-        
-        components.hour = 0
-        components.minute = 0
-        components.second = 0
-        
-        let date0h = gregorian.date(from: components)!
-        
-        components.hour = 24
-        
-        let date0hJD = jdFromDate(date: date0h as NSDate)
-        let nowJD = jdFromDate(date: now as NSDate)
-        
-        let D = nowJD - 2451545.0
-        let D0 = date0hJD - 2451545.0
-        
-        let H = Double(gregorian.component(.hour, from: now))
-        
-        let GMST = 6.697374558 + (0.06570982441908 * D0) + (1.00273790935 * H) + (0.000026 * (D/36525) * (D/36525))
-        
-        let GAST = GMST + (((-0.000319 * sin(125.04 - (0.052954 * D))) - (0.000024 * sin(2 * (280.47 + (0.98565 * D))))) * cos(23.4393 - (0.0000004 * D)))
-        
-        ra = String(GAST.truncatingRemainder(dividingBy: 24) + (locationValue.longitude / 15))
-        //ra = String(GMST.truncatingRemainder(dividingBy: 24) + (locationValue.longitude / 15)) //GMST seems to be closer to value from USNO but GAST is supposed to be the correct value
-        dec = String(locationValue.latitude) //The declination at the zenith is equal to the site's latitude; therefore, the zenith for an observer at 45°N will be +45°.
-        astroPicURL = URL(string: "https://skyserver.sdss.org/dr13/SkyServerWS/ImgCutout/getjpeg?ra=" + ra + "&dec=" + dec + "&scale=1&width=" + screenWidth + "&height=" + screenHeight)
-        print("Image URL: " + astroPicURL.absoluteString)
-        self.menuLog = "Current Log: Image URL: " + astroPicURL.absoluteString
-        
-        do {
-            data = try Data(contentsOf: astroPicURL)
-            image = NSImage(data: data)
-            print("Image fetched.")
-            self.menuLog = "Current Log: Image fetched."
-            
-            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            
-            let destinationURL = documentsURL.appendingPathComponent("EmpyreanEyesImage.png")
-            
-            if image.pngWrite(to: destinationURL) {
-                print("File saved.")
-                self.menuLog = "Current Log: Image file saved locally."
-            }
-            
-            do {
-                guard var options = workspace.desktopImageOptions(for: screen) else {
-                    return
-                }
-                options[NSWorkspaceDesktopImageScalingKey] = NSNumber(value: NSImageScaling.scaleAxesIndependently.rawValue)
-                options[NSWorkspaceDesktopImageAllowClippingKey] = true
-                
-                try workspace.setDesktopImageURL(destinationURL, for: screen, options: options)
-                print("Desktop Changed.")
-                self.menuLog = "Current Log: Desktop changed successfully."
-                
-                NSTimeZone.default = NSTimeZone.system
-                self.lastUpdated = "Last Updated: " + Date().description(with: Locale.current)
-            } catch {
-                print("--------------------")
-                print("ALERT: Cannot change desktop image.")
-                print("ERROR: ")
-                print(error.localizedDescription)
-                print("--------------------")
-                self.menuLog = "Current Log: ERROR: Cannot change desktop image."
-                //Add some error stuff in statusbar window if cannot fetch image
-            }
-
-        } catch {
-            print("--------------------")
-            print("ALERT: Cannot get png from url: ")
-            print(astroPicURL)
-            print("ERROR: ")
-            print(error.localizedDescription)
-            print("--------------------")
-            self.menuLog = "Current Log: ERROR: Cannot get image from url. Either the internet request failed, or you're out of range for available images."
-            //Add some error stuff in statusbar window if cannot fetch image
+        let interval = TimeInterval(Preferences.intervalMinutes) * 60
+        let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+            Task { @MainActor [weak self] in self?.updateNow() }
         }
-        
-        locationManager?.stopUpdatingLocation()
-        manager.delegate = nil
+        timer.tolerance = interval * 0.1
+        self.timer = timer
     }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
+    private func updateNow() {
+        guard updateTask == nil else { return }
+        updateTask = Task { [weak self] in
+            await self?.performUpdate()
+            self?.updateTask = nil
+        }
     }
 
+    private func performUpdate() async {
+        statusMessage = "Locating…"
+
+        let coordinate: CLLocationCoordinate2D
+        do {
+            coordinate = try await locationProvider.currentCoordinate()
+        } catch {
+            report(error, prefix: "Location")
+            return
+        }
+
+        let zenith = SkyCalculator.zenith(
+            at: Date(),
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude
+        )
+        statusMessage = "Zenith \(zenith.displayString)"
+
+        let service = SkyImageService(
+            release: Preferences.release,
+            scale: Preferences.arcsecondsPerPixel
+        )
+
+        let screens = NSScreen.screens
+        guard !screens.isEmpty else {
+            statusMessage = "No displays attached."
+            return
+        }
+
+        // One download per distinct pixel size, reused across matching screens.
+        var imagesBySize: [String: URL] = [:]
+        var appliedURLs: Set<URL> = []
+        let token = String(Int(Date().timeIntervalSince1970))
+
+        for (index, screen) in screens.enumerated() {
+            let size = WallpaperSetter.pixelSize(of: screen)
+            let key = "\(Int(size.width))x\(Int(size.height))"
+
+            do {
+                let fileURL: URL
+                if let existing = imagesBySize[key] {
+                    fileURL = existing
+                } else {
+                    statusMessage = "Fetching \(key) view of the sky…"
+                    let image = try await service.fetchImage(for: zenith, pixelSize: size)
+                    fileURL = try WallpaperSetter.writeImage(image, token: "\(token)-\(index)-\(key)")
+                    imagesBySize[key] = fileURL
+                }
+                try WallpaperSetter.apply(fileURL, to: screen)
+                appliedURLs.insert(fileURL)
+            } catch SkyImageError.outsideSurveyFootprint {
+                // Not a per-display fault, so it gets no display prefix.
+                report(SkyImageError.outsideSurveyFootprint, prefix: "No coverage")
+                return
+            } catch {
+                report(error, prefix: "Display \(index + 1)")
+                return
+            }
+        }
+
+        WallpaperSetter.pruneOldImages(keeping: appliedURLs)
+
+        lastUpdated = Date()
+        statusMessage = "Zenith \(zenith.displayString)"
+        logger.info("Wallpaper updated for \(screens.count) display(s).")
+    }
+
+    private func report(_ error: Error, prefix: String) {
+        let message = error.localizedDescription
+        statusMessage = "\(prefix): \(message)"
+        logger.error("\(prefix) failure: \(message)")
+    }
 }

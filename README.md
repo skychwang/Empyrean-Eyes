@@ -1,32 +1,94 @@
 # Empyrean Eyes
 
-Set the views of the stars above you as your dynamic desktop wallpaper with Empyrean Eyes: a small, lightweight, navbar-centric OS X application inspired by [Satellite Eyes](https://github.com/tomtaylor/satellite-eyes). 
+Your desktop wallpaper, set to the patch of sky directly above you — and kept
+there as the Earth turns. A small menu bar app for macOS, inspired by
+[Satellite Eyes](https://github.com/tomtaylor/satellite-eyes).
 
-## Building / Running
+## Install
 
-Empyrean Eyes is XCode 8.2.1 Compatible and targets 10.12 (Mac OS X Sierra) upwards.  
-To download an .app file of the project, navigate to Github releases and download the latest version.  
+Download `EmpyreanEyes.zip` from
+[Releases](https://github.com/skychwang/Empyrean-Eyes/releases), unzip it, and
+drag `EmpyreanEyes.app` to `/Applications`.
 
-## Description of Functionality 
+The app is signed ad-hoc rather than with a paid Developer ID, so Gatekeeper
+will not open it on the first double-click. Either right-click the app and
+choose **Open**, or clear the quarantine flag:
 
-A native OS X app written in Swift 3 and built with XCode. Utilizes location services and the calculation featured at the [USNO](http://aa.usno.navy.mil/faq/docs/GAST.php) to compute the Right Ascension (RA) and Declination (DEC) of the zenith at current user location. This is then fed into the Sloan Digital Sky Survey's [DR13 Finding Chart Tool](http://skyserver.sdss.org/dr13/en/tools/chart/chartinfo.aspx) to return the image of the stars above you at your desktop wallpaper's dimensions, which is then used to set the desktop wallpaper. Wallpaper updates are periodic. 
+```sh
+xattr -dr com.apple.quarantine /Applications/EmpyreanEyes.app
+```
 
-## Screenshots  
+On first run, macOS asks for Location Services access. If you would rather not
+grant it, open **Preferences** from the menu bar and enter a latitude and
+longitude by hand.
 
-![Taskbar Menu](images/1.png?raw=true "Taskbar Menu")
+Requires macOS 13 Ventura or later. Universal — Apple silicon and Intel.
+
+## How it works
+
+Local sidereal time *is* the right ascension of your meridian, and the zenith
+sits on the meridian by definition. So the app takes your latitude and
+longitude, computes Greenwich Apparent Sidereal Time using the
+[USNO's formulae](https://aa.usno.navy.mil/faq/GAST), and converts to local
+sidereal time — which gives the right ascension overhead. Declination at the
+zenith is simply your latitude.
+
+Those coordinates go to the Sloan Digital Sky Survey's
+[SkyServer image cutout service](https://skyserver.sdss.org/dr19/), which
+returns a real telescope image of that patch of sky at your display's exact
+pixel dimensions. That becomes your wallpaper, on every attached display,
+refreshed on an interval you choose.
+
+## Preferences
+
+| Setting | What it does |
+| --- | --- |
+| Refresh interval | How often to re-aim and re-fetch. Default 30 minutes. |
+| Arcsec / pixel | Field of view. Lower zooms in; higher takes in more sky. |
+| Data release | Which SDSS release to pull from. Default DR19. |
+| Manual location | Skip Location Services and name a spot yourself. |
+
+**Launch at Login** is a toggle in the menu itself.
+
+## Coverage
+
+SDSS imaged roughly a third of the sky, concentrated well away from the plane
+of the Milky Way. When the zenith drifts outside that footprint, SkyServer
+returns a blank frame. Rather than hang a black rectangle on your desktop,
+Empyrean Eyes detects the blank tile, leaves your current wallpaper alone, and
+says so in the menu. Wait a few hours and the sky rotates back into coverage.
+
+## Building
+
+```sh
+git clone https://github.com/skychwang/Empyrean-Eyes.git
+cd Empyrean-Eyes
+xcodebuild -scheme EmpyreanEyes -configuration Release build
+xcodebuild -scheme EmpyreanEyes test
+```
+
+Xcode 26 or later, Swift 6. The project signs ad-hoc by default, so it builds
+with no Apple Developer account and no team configured.
+
+## Screenshots
+
+The menu, showing the coordinates currently overhead:
+
+![Menu bar menu](images/1.png?raw=true "Menu bar menu")
+
+Preferences:
+
 ![Preferences](images/2.png?raw=true "Preferences")
-![Fetched Image](images/3.png?raw=true "Fetched Image")
 
-## Known Issue(s)
+And the wallpaper it produced — the zenith over New York, from SDSS DR19:
 
-Users at certain locations may experience perodic outages in sky survey images, as the RA's (changes with time) corresponding DEC (fixed to the longitude of the user's position) at zenith may be out of the SDSS's recorded range.
+![Fetched sky](images/3.jpg?raw=true "Fetched sky")
 
 ## Acknowledgements
 
-Icon is made by [Freepik](http://www.flaticon.com/authors/freepik).
+Menu bar icon by [Freepik](https://www.flaticon.com/authors/freepik). Imagery
+courtesy of the [Sloan Digital Sky Survey](https://www.sdss.org/).
 
-## Features Yet To Be Implemented
+## License
 
-Option to start on login  
-Multiple sources and spectra  
-...suggestions and direct feature contributions are welcome. 
+MIT — see [LICENSE](LICENSE).

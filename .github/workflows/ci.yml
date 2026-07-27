@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Test
+        run: |
+          xcodebuild test \
+            -project EmpyreanEyes.xcodeproj \
+            -scheme EmpyreanEyes \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Build universal release
+        run: |
+          xcodebuild build \
+            -project EmpyreanEyes.xcodeproj \
+            -scheme EmpyreanEyes \
+            -configuration Release \
+            -derivedDataPath build \
+            ARCHS="arm64 x86_64" \
+            ONLY_ACTIVE_ARCH=NO
+
+      - name: Check the binary is universal
+        run: lipo -archs build/Build/Products/Release/EmpyreanEyes.app/Contents/MacOS/EmpyreanEyes
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: EmpyreanEyes
+          path: build/Build/Products/Release/EmpyreanEyes.app
